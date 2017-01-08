@@ -1,0 +1,1 @@
+export const USE_SESSION_STORAGE = false
