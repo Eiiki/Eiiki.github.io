@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 import { GetSessionStorageState, StateToSessionStorage } from '../storages/session-storage'
 
 import {
-  INIT
+  INIT,
+  REQUEST_MATCHES, RECEIVE_MATCHES
 } from './actions'
 
 export function init(state={
@@ -15,9 +16,33 @@ export function init(state={
         initialized: true,
         data: action.data
       }
-      StateToSessionStorage(state, 'eiiki_homepage')
+      StateToSessionStorage(state, 'init')
       return state
     default:
-      return GetSessionStorageState(state, 'eiiki_homepage')
+      return GetSessionStorageState(state, 'init')
+  }
+}
+
+export function matches(state={
+  fetching: false,
+  matches: []
+}, action) {
+  switch (action.type){
+    case REQUEST_MATCHES:
+      state = {...state,
+        fetching: true,
+        matches: []
+      }
+      StateToSessionStorage(state, 'matches')
+      return state
+    case RECEIVE_MATCHES:
+      state = {...state,
+        fetching: false,
+        matches: action.data
+      }
+      StateToSessionStorage(state, 'matches')
+      return state
+    default:
+      return GetSessionStorageState(state, 'matches')
   }
 }

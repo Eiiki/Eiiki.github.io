@@ -1,5 +1,5 @@
 var React = require('react')
-import { initStorage } from '../../redux/actions'
+import { initStorage, fetchMatches } from '../../redux/actions'
 import { connect } from 'react-redux'
 
 
@@ -13,6 +13,7 @@ var Api = React.createClass({
   componentDidMount: function() {
     const {dispatch} = this.props
     dispatch(initStorage())
+    dispatch(fetchMatches())
   },
 
   render: function() {
